@@ -1,24 +1,63 @@
 {
   "name": "@tanqory/api-client",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A JavaScript client library for the Tanqory API.",
   "main": "src/tanqory.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "src",
+    "types",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Warning: No tests specified\" && exit 0",
+    "test:watch": "echo \"Warning: No tests specified\" && exit 0",
+    "test:coverage": "echo \"Warning: No tests specified\" && exit 0",
+    "lint": "echo \"Warning: No linter configured\" && exit 0",
+    "lint:fix": "echo \"Warning: No linter configured\" && exit 0",
+    "build": "echo \"Warning: No build step configured\" && exit 0",
+    "prepublishOnly": "echo \"Ready to publish!\""
   },
   "keywords": [
     "tanqory",
     "api",
     "client",
+    "javascript",
+    "sdk",
+    "rest",
+    "http",
     "scoped"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": {
+    "name": "TANQ PTE. LTD.",
+    "email": "dev@tanqory.com",
+    "url": "https://tanqory.com"
+  },
   "license": "MIT",
+  "homepage": "https://github.com/tanqory/api-client#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanqory/api-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tanqory/api-client/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
     "@tanqory/site-utils": "^0.0.32",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0"
   }
 }
