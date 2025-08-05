@@ -1,8 +1,8 @@
 
 
 module.exports = {
-    API_FORMS: "https://api-forms-staging.tanqory.com",
-    API_STORAGE: "https://api-storage-staging.tanqory.com",
-    API_SITES: "https://api-staging.tanqory.com",
-    API_AUTH: "https://api-auth-staging.tanqory.com",
+    API_FORMS: process.env.API_FORMS || "https://api-forms.tanqory.com",
+    API_STORAGE: process.env.API_FORMS || "https://api-storage.tanqory.com",
+    API_SITES: process.env.API_FORMS || "https://api.tanqory.com",
+    API_AUTH: process.env.API_FORMS || "https://api-auth.tanqory.com",
 }
