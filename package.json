@@ -1,6 +1,6 @@
 {
   "name": "@tanqory/api-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A JavaScript client library for the Tanqory API.",
   "main": "src/tanqory.js",
   "types": "types/index.d.ts",

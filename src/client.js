@@ -8,6 +8,7 @@ const Post = require('./resources/Post');
 const Menu = require('./resources/Menu');
 const Product = require('./resources/Product');
 const Collection = require('./resources/Collection');
+const Config = require('./resources/Config');
 
 class Client {
   constructor() {
@@ -19,6 +20,7 @@ class Client {
     this.menu = new Menu();
     this.product = new Product();
     this.collection = new Collection(); 
+    this.config = new Config();
   }
 }
 
