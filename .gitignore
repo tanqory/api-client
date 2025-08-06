@@ -1,6 +1,10 @@
 example.js
+example.ts
 node_modules
 .DS_Store
 *.log
 *.tmp
-*.env   
+*.env
+.vscode/
+coverage/
+*.tsbuildinfo   

@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
 
-A powerful JavaScript API client for interacting with the Tanqory platform. This library provides a clean and intuitive interface for managing your site's data, including products, collections, pages, and more, with built-in features like automatic token refreshing and flexible query parameters.
+A powerful TypeScript API client for interacting with the Tanqory platform. This library provides a clean and intuitive interface for managing your site's data, including products, collections, pages, and more, with built-in features like automatic token refreshing, flexible query parameters, and full TypeScript support.
 
 ## Table of Contents
 
@@ -18,6 +18,7 @@ A powerful JavaScript API client for interacting with the Tanqory platform. This
   - [Blog Posts](#blog-posts-post-resource)
   - [Menus](#menus-menu-resource)
   - [Site Settings](#site-settings)
+- [TypeScript Support](#typescript-support)
 - [Error Handling](#error-handling)
 - [API Reference](#api-reference)
 - [Contributing](#contributing)
@@ -31,7 +32,8 @@ A powerful JavaScript API client for interacting with the Tanqory platform. This
 - 🔍 **Flexible Queries**: Easily filter, sort, and paginate data with powerful query options
 - 🌐 **Country-specific Content**: Support for country-specific product and collection data
 - ⚡ **Lightweight**: Minimal dependencies with a clean, simple API
-- 📝 **TypeScript Support**: Built-in TypeScript definitions for better development experience
+- 📝 **Full TypeScript Support**: Built with TypeScript for excellent developer experience and type safety
+- 🛡️ **Type Safety**: Complete type definitions for all API responses and request parameters
 
 ## Installation
 
@@ -70,42 +72,130 @@ const client = Tanqory.init({
 });
 ```
 
-### ES6 Modules
+### ES6 Modules & TypeScript
 
-```javascript
-import Tanqory from '@tanqory/api-client';
+```typescript
+import Tanqory, { TanqoryInitOptions, Product, Collection } from '@tanqory/api-client';
 
 const client = Tanqory.init({
   siteId: "your-site-id",
   accessToken: "your-access-token", 
   refreshToken: "your-refresh-token"
 });
+
+// TypeScript provides full intellisense and type checking
+const products: Product[] = await client.product.searchByName("T-shirt");
 ```
 
 > **🔒 Security Note:** The client automatically refreshes expired access tokens using the refresh token, ensuring uninterrupted API access.
 
 ### Basic Usage Example
 
-```javascript
+```typescript
 async function example() {
   try {
-    // Get all products
+    // Get all products with TypeScript support
     const products = await client.product.all();
-    console.log(`Found ${products.data.length} products`);
+    console.log(`Found ${products?.data?.length || 0} products`);
 
-    // Search for a specific product
+    // Search for a specific product with type safety
     const searchResults = await client.product.searchByName("T-shirt");
     console.log(`Found ${searchResults.length} matching products`);
 
-    // Get a specific collection
+    // Get a specific collection with proper typing
     const collection = await client.collection.find("summer-2024");
-    console.log(`Collection: ${collection.name}`);
+    console.log(`Collection: ${collection?.name}`);
   } catch (error) {
     console.error('API Error:', error.message);
   }
 }
 
 example();
+```
+
+## TypeScript Support
+
+This library is built with TypeScript and provides excellent type safety and developer experience.
+
+### Type Definitions
+
+All API responses, request parameters, and configuration options are fully typed:
+
+```typescript
+import { 
+  TanqoryInitOptions, 
+  QueryOptions, 
+  Product, 
+  Collection, 
+  ApiResponse 
+} from '@tanqory/api-client';
+
+// Type-safe initialization
+const options: TanqoryInitOptions = {
+  siteId: "your-site-id",
+  accessToken: "your-access-token",
+  refreshToken: "your-refresh-token"
+};
+
+// Type-safe query options
+const queryOptions: QueryOptions = {
+  limit: 20,
+  sort: 'name',
+  order: 'asc',
+  search: 'shirt',
+  country: 'US'
+};
+
+// Type-safe API responses
+const response: ApiResponse<Product> = await client.product.all(queryOptions);
+const products: Product[] = response.data || [];
+```
+
+### Generic Methods
+
+Most methods support generic type parameters for even better type safety:
+
+```typescript
+// Explicit type specification
+const products = await client.product.all<Product>({ limit: 10 });
+const pages = await client.page.getAllPages<Page>({ search: "about" });
+
+// TypeScript automatically infers return types
+const product = await client.product.find("product-123"); // Type: Product | null
+const collection = await client.collection.find("collection-456"); // Type: Collection | null
+```
+
+### Interface Definitions
+
+Key interfaces you can use in your TypeScript projects:
+
+```typescript
+interface Product extends BaseResource {
+  description?: string;
+  price?: number;
+  currency?: string;
+  images?: string[];
+  category?: string;
+  tags?: string[];
+  stock?: number;
+  sku?: string;
+}
+
+interface Collection extends BaseResource {
+  description?: string;
+  products?: Product[];
+  image?: string;
+}
+
+interface QueryOptions {
+  limit?: number;
+  next?: string;
+  sort?: string;
+  order?: 'asc' | 'desc';
+  search?: string;
+  country?: string;
+  page?: number;
+}
 ```
 
 ## Resources

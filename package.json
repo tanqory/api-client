@@ -1,28 +1,33 @@
 {
   "name": "@tanqory/api-client",
-  "version": "0.0.3",
-  "description": "A JavaScript client library for the Tanqory API.",
-  "main": "src/tanqory.js",
-  "types": "types/index.d.ts",
+  "version": "0.1.1",
+  "description": "A TypeScript client library for the Tanqory API.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src",
-    "types",
+    "dist",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
     "test": "echo \"Warning: No tests specified\" && exit 0",
     "test:watch": "echo \"Warning: No tests specified\" && exit 0",
     "test:coverage": "echo \"Warning: No tests specified\" && exit 0",
-    "lint": "echo \"Warning: No linter configured\" && exit 0",
-    "lint:fix": "echo \"Warning: No linter configured\" && exit 0",
-    "build": "echo \"Warning: No build step configured\" && exit 0",
-    "prepublishOnly": "echo \"Ready to publish!\""
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
     "tanqory",
     "api",
     "client",
+    "typescript",
     "javascript",
     "sdk",
     "rest",
@@ -55,8 +60,13 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/node-fetch": "^2.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.0.0",
     "jest": "^29.0.0",
+    "typescript": "^5.0.0",
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0"
   }
