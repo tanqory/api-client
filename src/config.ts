@@ -24,6 +24,22 @@ export const setConfig = (options: TanqoryInitOptions): void => {
     config.siteId = options.siteId;
     console.log(`Tanqory Library: Site ID has been set to ${config.siteId}`);
   }
+  if (options && options.apiFormsUrl) {
+    config.apiFormsUrl = options.apiFormsUrl;
+    console.log(`Tanqory Library: APIs From URL has been set to ${config.apiFormsUrl}`);
+  }
+  if (options && options.apiStorageUrl) {
+    config.apiStorageUrl = options.apiStorageUrl;
+    console.log(`Tanqory Library: APIs Storage URL has been set to ${config.apiStorageUrl}`);
+  }
+  if (options && options.apiSitesUrl) {
+    config.apiSitesUrl = options.apiSitesUrl;
+    console.log(`Tanqory Library: APIs Site URL has been set to ${config.apiSitesUrl}`);
+  }
+  if (options && options.apiAuthUrl) {
+    config.apiAuthUrl = options.apiAuthUrl;
+    console.log(`Tanqory Library: APIs Auth URL has been set to ${config.apiAuthUrl}`);
+  }
 };
 
 export const getConfig = (): TanqoryConfig => {
