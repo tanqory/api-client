@@ -1,15 +1,21 @@
 export interface TanqoryConfig {
   accessToken: string | null;
   refreshToken: string | null;
-  apiUrl: string;
   siteId: string | null;
+  apiFormsUrl: string,
+  apiStorageUrl: string,
+  apiSitesUrl: string,
+  apiAuthUrl: string,
 }
 
 export interface TanqoryInitOptions {
   accessToken?: string;
   refreshToken?: string;
-  apiUrl?: string;
   siteId?: string;
+  apiFormsUrl?: string,
+  apiStorageUrl?: string,
+  apiSitesUrl?: string,
+  apiAuthUrl?: string,
 }
 
 export interface QueryOptions {

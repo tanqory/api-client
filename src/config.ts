@@ -1,9 +1,13 @@
+import { API_AUTH, API_FORMS, API_SITES, API_STORAGE } from './endpoints';
 import { TanqoryConfig, TanqoryInitOptions } from './types';
 
 let config: TanqoryConfig = {
   accessToken: null,
   refreshToken: null,
-  apiUrl: 'https://api.tanqory.com',
+  apiFormsUrl: API_FORMS,
+  apiStorageUrl: API_STORAGE,
+  apiSitesUrl: API_SITES,
+  apiAuthUrl: API_AUTH,
   siteId: null
 };
 

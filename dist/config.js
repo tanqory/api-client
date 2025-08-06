@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkConfig = exports.getConfig = exports.setConfig = void 0;
+const endpoints_1 = require("./endpoints");
 let config = {
     accessToken: null,
     refreshToken: null,
-    apiUrl: 'https://api.tanqory.com',
+    apiFormsUrl: endpoints_1.API_FORMS,
+    apiStorageUrl: endpoints_1.API_STORAGE,
+    apiSitesUrl: endpoints_1.API_SITES,
+    apiAuthUrl: endpoints_1.API_AUTH,
     siteId: null
 };
 const setConfig = (options) => {

@@ -6,15 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Base = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const config_1 = require("../config");
-const endpoints_1 = require("../endpoints");
-const refreshToken = async () => {
+const refreshToken = async (_url) => {
     const { refreshToken: token } = (0, config_1.getConfig)();
     if (!token) {
         throw new Error("No refresh token available. User must log in again.");
     }
     console.log("Access Token expired. Attempting to refresh token...");
     try {
-        const url = `${endpoints_1.API_AUTH}/api/v1/auth/token/refresh-access-token`;
+        const url = `${_url}/api/v1/auth/token/refresh-access-token`;
         const response = await (0, node_fetch_1.default)(url, {
             method: 'POST',
             headers: {
@@ -61,7 +60,7 @@ class Base {
             if (response.status === 401 && retryCount > 0) {
                 // ถ้า Access Token หมดอายุ ให้ลอง Refresh Token
                 console.warn("Unauthorized request. Attempting to refresh token and retry...");
-                const newAccessToken = await refreshToken();
+                const newAccessToken = await refreshToken(this.config.apiAuthUrl);
                 // ลองเรียก API เดิมอีกครั้งด้วย Token ใหม่
                 return this._request(url, {
                     ...options,
@@ -86,7 +85,7 @@ class Base {
         }
     }
     async docs(options = {}) {
-        const url = new URL(`${endpoints_1.API_FORMS}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}`);
+        const url = new URL(`${this.config.apiFormsUrl}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}`);
         const params = {
             limit: options.limit || 10,
             next: options.next || "",
@@ -104,7 +103,7 @@ class Base {
         return response;
     }
     async doc(id) {
-        const url = new URL(`${endpoints_1.API_FORMS}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}/document/${id}`);
+        const url = new URL(`${this.config.apiFormsUrl}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}/document/${id}`);
         const response = await this._request(url.href, { method: 'GET' });
         return response;
     }
@@ -119,7 +118,7 @@ class Base {
             country: options.country || "",
         };
         if (this.resourceName === 'collection') {
-            const url = new URL(`${endpoints_1.API_SITES}/api/v1/sites/${this.config.siteId}/collections`);
+            const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/collections`);
             for (const key in params) {
                 if (params[key] !== undefined && params[key] !== null) {
                     url.searchParams.append(key, String(params[key]));
@@ -129,7 +128,7 @@ class Base {
             return response;
         }
         else if (this.resourceName === 'product') {
-            const url = new URL(`${endpoints_1.API_SITES}/api/v1/sites/${this.config.siteId}/products`);
+            const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/products`);
             for (const key in params) {
                 if (params[key] !== undefined && params[key] !== null) {
                     url.searchParams.append(key, String(params[key]));
@@ -143,12 +142,12 @@ class Base {
     // เมธอดสำหรับเรียกข้อมูลตาม ID
     async find(id) {
         if (this.resourceName === 'collection') {
-            const url = new URL(`${endpoints_1.API_SITES}/api/v1/sites/${this.config.siteId}/collections/${id}`);
+            const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/collections/${id}`);
             const response = await this._request(url.href, { method: 'GET' });
             return response;
         }
         else if (this.resourceName === 'product') {
-            const url = new URL(`${endpoints_1.API_SITES}/api/v1/sites/${this.config.siteId}/products/${id}`);
+            const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/products/${id}`);
             const response = await this._request(url.href, { method: 'GET' });
             return response;
         }

@@ -1,6 +1,5 @@
 import fetch from 'node-fetch';
 import { getConfig, checkConfig, setConfig } from '../config';
-import { API_FORMS, API_AUTH, API_SITES } from '../endpoints';
 import { 
   TanqoryConfig, 
   QueryOptions, 
@@ -10,7 +9,7 @@ import {
   BaseResource 
 } from '../types';
 
-const refreshToken = async (): Promise<string> => {
+const refreshToken = async (_url: string): Promise<string> => {
   const { refreshToken: token } = getConfig();
   if (!token) {
     throw new Error("No refresh token available. User must log in again.");
@@ -19,7 +18,7 @@ const refreshToken = async (): Promise<string> => {
   console.log("Access Token expired. Attempting to refresh token...");
   
   try {
-    const url = `${API_AUTH}/api/v1/auth/token/refresh-access-token`;
+    const url = `${_url}/api/v1/auth/token/refresh-access-token`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -77,7 +76,7 @@ export class Base {
       if (response.status === 401 && retryCount > 0) {
         // ถ้า Access Token หมดอายุ ให้ลอง Refresh Token
         console.warn("Unauthorized request. Attempting to refresh token and retry...");
-        const newAccessToken = await refreshToken();
+        const newAccessToken = await refreshToken(this.config.apiAuthUrl);
         
         // ลองเรียก API เดิมอีกครั้งด้วย Token ใหม่
         return this._request<T>(url, { 
@@ -106,7 +105,7 @@ export class Base {
   }
 
   async docs<T = BaseResource>(options: QueryOptions = {}): Promise<ApiResponse<T>> {
-    const url = new URL(`${API_FORMS}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}`);
+    const url = new URL(`${this.config.apiFormsUrl}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}`);
     const params = {
       limit: options.limit || 10,
       next: options.next || "",
@@ -127,7 +126,7 @@ export class Base {
   }
 
   async doc<T = BaseResource>(id: string): Promise<T> {
-    const url = new URL(`${API_FORMS}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}/document/${id}`);
+    const url = new URL(`${this.config.apiFormsUrl}/api/v1/document-site/sites/${this.config.siteId}/forms/${this.formId}/document/${id}`);
     const response = await this._request<T>(url.href, { method: 'GET' });
     return response;
   }
@@ -144,7 +143,7 @@ export class Base {
     };
     
     if (this.resourceName === 'collection') {
-      const url = new URL(`${API_SITES}/api/v1/sites/${this.config.siteId}/collections`);
+      const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/collections`);
       for (const key in params) {
         if (params[key as keyof typeof params] !== undefined && params[key as keyof typeof params] !== null) {
           url.searchParams.append(key, String(params[key as keyof typeof params]));
@@ -153,7 +152,7 @@ export class Base {
       const response = await this._request<ApiResponse<T>>(url.href, { method: 'GET' });
       return response;
     } else if (this.resourceName === 'product') {
-      const url = new URL(`${API_SITES}/api/v1/sites/${this.config.siteId}/products`);
+      const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/products`);
       for (const key in params) {
         if (params[key as keyof typeof params] !== undefined && params[key as keyof typeof params] !== null) {
           url.searchParams.append(key, String(params[key as keyof typeof params]));
@@ -168,11 +167,11 @@ export class Base {
   // เมธอดสำหรับเรียกข้อมูลตาม ID
   async find<T = BaseResource>(id: string): Promise<T | null> {
     if (this.resourceName === 'collection') {
-      const url = new URL(`${API_SITES}/api/v1/sites/${this.config.siteId}/collections/${id}`);
+      const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/collections/${id}`);
       const response = await this._request<T>(url.href, { method: 'GET' });
       return response;
     } else if (this.resourceName === 'product') {
-      const url = new URL(`${API_SITES}/api/v1/sites/${this.config.siteId}/products/${id}`);
+      const url = new URL(`${this.config.apiSitesUrl}/api/v1/sites/${this.config.siteId}/products/${id}`);
       const response = await this._request<T>(url.href, { method: 'GET' });
       return response;
     }

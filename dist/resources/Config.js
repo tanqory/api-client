@@ -15,9 +15,6 @@ class Config {
     siteId() {
         return this.config.siteId;
     }
-    apiUrl() {
-        return this.config.apiUrl;
-    }
 }
 exports.Config = Config;
 //# sourceMappingURL=Config.js.map

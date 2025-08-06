@@ -1,1 +1,1 @@
-{"version":3,"file":"endpoints.d.ts","sourceRoot":"","sources":["../src/endpoints.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,SAAS,QAA2D,CAAC;AAClF,eAAO,MAAM,WAAW,QAA+D,CAAC;AACxF,eAAO,MAAM,SAAS,QAAqD,CAAC;AAC5E,eAAO,MAAM,QAAQ,QAAyD,CAAC;AAE/E,eAAO,MAAM,SAAS;;;;;CAKZ,CAAC"}
+{"version":3,"file":"endpoints.d.ts","sourceRoot":"","sources":["../src/endpoints.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,SAAS,kCAAkC,CAAC;AACzD,eAAO,MAAM,WAAW,oCAAoC,CAAC;AAC7D,eAAO,MAAM,SAAS,4BAA4B,CAAC;AACnD,eAAO,MAAM,QAAQ,iCAAiC,CAAC;AAEvD,eAAO,MAAM,SAAS;;;;;CAKZ,CAAC"}

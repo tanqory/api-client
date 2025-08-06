@@ -19,8 +19,4 @@ export class Config {
   siteId(): string | null {
     return this.config.siteId;
   }
-
-  apiUrl(): string {
-    return this.config.apiUrl;
-  }
 }
